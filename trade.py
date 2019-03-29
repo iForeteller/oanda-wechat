@@ -64,6 +64,9 @@ def trade(signal):
                 if int(trade['units']) > 0:
                     tradeClose(trade['id'])
                     marketOrder(-units1)
+    else:
+        print('指令无效')
+        f1.send_msg('指令无效')
         
 def tradeList():
     # request trades list
