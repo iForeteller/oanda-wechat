@@ -86,6 +86,7 @@ def tradeList():
         for dict in rv.response['trades']:
             if dict['instrument'] == instrument1:
                 tradelist.append({'id':dict['id'],'units':dict['currentUnits']})
+    print(tradelist)
     return tradelist
 def marketOrder(units):
     mktOrder = MarketOrderRequest(
