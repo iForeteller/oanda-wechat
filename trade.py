@@ -8,6 +8,12 @@ Created on Sun Mar 24 19:41:45 2019
 from wxpy import *
 import requests
 import oandapyV20
+import json
+from oandapyV20 import API    # the client
+import oandapyV20.endpoints.trades as trades
+#from oandapyV20.contrib.requests import MarketOrderRequest
+#from oandapyV20.contrib.requests import TakeProfitDetails, StopLossDetails
+import oandapyV20.endpoints.orders as orders
 #from datetime import datetime
 
 bot = Bot(cache_path=True, console_qr=True)
@@ -20,18 +26,83 @@ foreteller = [f1, f2, mp]
 reg1 = r'度一每日多空平'
 reg2 = r'明日股市预测:   <font size="+2" color="black">'
 
+def exampleAuth():
+    accountID, token = None, None
+    with open("account.txt") as I:
+        accountID = I.read().strip()
+    with open("token.txt") as I:
+        token = I.read().strip()
+    return accountID, token
+
+accountID, access_token = exampleAuth()
+
+instrument1 = 'CN50_USD'
+units1 = 1
+
+client = API(access_token=access_token)
+
 def trade(signal):
     if signal == '做多':
-    if signal == '平仓':
+        tradelist = tradeList()
+        if tradelist == []:
+            marketOrder(units1)
+        else:
+            for trade in tradelist:
+                if int(trade['units']) < 0:
+                    tradeClose(trade['id'])
+                    marketOrder(units1)
+    elif signal == '平仓':
+        tradelist = tradeList()
+        for trade in tradelist:
+            tradeClose(trade['id'])
+    elif signal == '做空':
+        tradelist = tradeList()
+        if tradelist == []:
+            marketOrder(-units1)
+        else:
+            for trade in tradelist:
+                if int(trade['units']) > 0:
+                    tradeClose(trade['id'])
+                    marketOrder(-units1)
         
-'''
-def order_buy():
-def order_sell():
-def order_close_buy():
-def order_close_sell():
-def order_select():
-'''
-    
+def tradeList():
+    # request trades list
+    r = trades.TradesList(accountID)
+    rv = client.request(r)
+    tradelist = []
+    if rv.response['trades'] != []:
+        for dict in rv.response['trades']:
+            if dict['instrument'] == instrument1:
+                tradelist.append({'id':dict['id'],'units':dict['currentUnits']})
+    return tradelist
+def marketOrder(units):
+    mktOrder = MarketOrderRequest(
+    instrument=instrument1,
+    units=units,
+    #takeProfitOnFill=TakeProfitDetails(price=EUR_USD_TAKE_PROFIT).data,
+    #stopLossOnFill=StopLossDetails(price=EUR_USD_STOP_LOSS).data
+    )
+
+    # create the OrderCreate request
+    r = orders.OrderCreate(accountID, data=mktOrder.data)
+    try:
+        # create the OrderCreate request
+        rv = api.request(r)
+    except oandapyV20.exceptions.V20Error as err:
+        f1.send_msg('下单错误'+'\n'+r.status_code +'\n' + err)
+    else:
+        f1.send_msg('下单成功'+'\n'+json.dumps(rv, indent=2))
+def tradeClose(tradeID):
+    '''
+    data =
+        {
+          "units": 1
+        }
+    '''
+    r = trades.TradeClose(accountID, tradeID)
+    client.request(r)
+    f1.send_msg('平仓'+'\n\+r.response)
+
 @bot.register(foreteller)
 def command(msg):
     if msg.sender == mp and msg.type == SHARING:
