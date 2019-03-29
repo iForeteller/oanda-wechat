@@ -45,7 +45,7 @@ def trade(signal):
     print('执行中。。。')
     if signal == '做多':
         tradelist = tradeList()
-        if tradelist == None:
+        if tradelist == []:
             print('下单做多')
             marketOrder(units1)
         else:
@@ -57,13 +57,13 @@ def trade(signal):
                     marketOrder(units1)
     elif signal == '平仓':
         tradelist = tradeList()
-        if tradelist != None:
+        if tradelist != []:
             for trade in tradelist:
                 print('平仓')
                 tradeClose(trade['id'])
     elif signal == '做空':
         tradelist = tradeList()
-        if tradelist == None:
+        if tradelist == []:
             print('下单做空')
             marketOrder(-units1)
         else:
@@ -83,9 +83,9 @@ def tradeList():
     r = trades.TradesList(accountID)
     rv = client.request(r)
     tradelist = []
-    print('rv.response',rv.response)
-    if rv.response['trades'] != []:
-        for dict in rv.response['trades']:
+    print('rv:',rv)
+    if rv['trades'] != []:
+        for dict in rv['trades']:
             if dict['instrument'] == instrument1:
                 tradelist.append({'id':dict['id'],'units':dict['currentUnits']})
     print('查询到的订单：',tradelist)
