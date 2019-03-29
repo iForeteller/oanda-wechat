@@ -42,27 +42,35 @@ units1 = 1
 client = API(access_token=access_token)
 
 def trade(signal):
+    print('执行中。。。')
     if signal == '做多':
         tradelist = tradeList()
         if tradelist == []:
+            print('下单做多')
             marketOrder(units1)
         else:
             for trade in tradelist:
                 if int(trade['units']) < 0:
+                    print('平空单')
                     tradeClose(trade['id'])
+                    print('下单做多')
                     marketOrder(units1)
     elif signal == '平仓':
         tradelist = tradeList()
         for trade in tradelist:
+            print('平仓')
             tradeClose(trade['id'])
     elif signal == '做空':
         tradelist = tradeList()
         if tradelist == []:
+            print('下单做空')
             marketOrder(-units1)
         else:
             for trade in tradelist:
                 if int(trade['units']) > 0:
+                    print('平多单')
                     tradeClose(trade['id'])
+                    print('下单做空')
                     marketOrder(-units1)
     else:
         print('指令无效')
@@ -70,6 +78,7 @@ def trade(signal):
         
 def tradeList():
     # request trades list
+    print('查询订单')
     r = trades.TradesList(accountID)
     rv = client.request(r)
     tradelist = []
@@ -127,9 +136,11 @@ def command(msg):
                 n = res.find(reg1)
                 if n!=i1:
                     signal = res[n+40:n+42]
+                    print(signal)
                     trade(signal)
     else:
         signal = msg.text
+        print(signal)
         trade(signal)
     
 embed()
