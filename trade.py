@@ -45,7 +45,7 @@ def trade(signal):
     print('执行中。。。')
     if signal == '做多':
         tradelist = tradeList()
-        if tradelist == []:
+        if tradelist == None:
             print('下单做多')
             marketOrder(units1)
         else:
@@ -57,12 +57,13 @@ def trade(signal):
                     marketOrder(units1)
     elif signal == '平仓':
         tradelist = tradeList()
-        for trade in tradelist:
-            print('平仓')
-            tradeClose(trade['id'])
+        if tradelist != None:
+            for trade in tradelist:
+                print('平仓')
+                tradeClose(trade['id'])
     elif signal == '做空':
         tradelist = tradeList()
-        if tradelist == []:
+        if tradelist == None:
             print('下单做空')
             marketOrder(-units1)
         else:
