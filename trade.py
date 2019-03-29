@@ -11,10 +11,10 @@ import oandapyV20
 import json
 from oandapyV20 import API    # the client
 import oandapyV20.endpoints.trades as trades
-#from oandapyV20.contrib.requests import MarketOrderRequest
-#from oandapyV20.contrib.requests import TakeProfitDetails, StopLossDetails
+from oandapyV20.contrib.requests import MarketOrderRequest
+from oandapyV20.contrib.requests import TakeProfitDetails, StopLossDetails
 import oandapyV20.endpoints.orders as orders
-#from datetime import datetime
+from datetime import datetime
 
 bot = Bot(cache_path=True, console_qr=True)
 
