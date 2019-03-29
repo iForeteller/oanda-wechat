@@ -119,9 +119,9 @@ def tradeClose(tradeID):
         }
     '''
     r = trades.TradeClose(accountID, tradeID)
-    client.request(r)
+    rv = client.request(r)
     print('平仓')
-    f1.send_msg('平仓'+'\n'+r.response)
+    f1.send_msg('平仓'+'\n'+json.dumps(rv, indent=2))
 
 @bot.register(foreteller)
 def command(msg):
