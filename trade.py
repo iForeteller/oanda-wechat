@@ -91,6 +91,7 @@ def tradeList():
     print('查询到的订单：',tradelist)
     return tradelist
 def marketOrder(units):
+    print('执行下单')
     mktOrder = MarketOrderRequest(
     instrument=instrument1,
     units=units,
@@ -102,7 +103,8 @@ def marketOrder(units):
     r = orders.OrderCreate(accountID, data=mktOrder.data)
     try:
         # create the OrderCreate request
-        rv = api.request(r)
+        print('下单中。。。')
+        rv = client.request(r)
     except oandapyV20.exceptions.V20Error as err:
         print('下单错误')
         f1.send_msg('下单错误'+'\n'+r.status_code +'\n' + err)
@@ -137,7 +139,7 @@ def command(msg):
                 '''    
                 res = str(requests.get(url))
                 n = res.find(reg1)
-                if n!=i1:
+                if n!=-1:
                     signal = res[n+40:n+42]
                     print(signal)
                     trade(signal)
