@@ -83,11 +83,12 @@ def tradeList():
     r = trades.TradesList(accountID)
     rv = client.request(r)
     tradelist = []
+    print('rv.response',rv.response)
     if rv.response['trades'] != []:
         for dict in rv.response['trades']:
             if dict['instrument'] == instrument1:
                 tradelist.append({'id':dict['id'],'units':dict['currentUnits']})
-    print(tradelist)
+    print('查询到的订单：',tradelist)
     return tradelist
 def marketOrder(units):
     mktOrder = MarketOrderRequest(
