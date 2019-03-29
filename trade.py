@@ -89,10 +89,10 @@ def marketOrder(units):
         # create the OrderCreate request
         rv = api.request(r)
     except oandapyV20.exceptions.V20Error as err:
-		print('下单错误')
+        print('下单错误')
         f1.send_msg('下单错误'+'\n'+r.status_code +'\n' + err)
     else:
-		print('下单成功')
+        print('下单成功')
         f1.send_msg('下单成功'+'\n'+json.dumps(rv, indent=2))
 def tradeClose(tradeID):
     '''
@@ -103,7 +103,7 @@ def tradeClose(tradeID):
     '''
     r = trades.TradeClose(accountID, tradeID)
     client.request(r)
-	print('平仓')
+    print('平仓')
     f1.send_msg('平仓'+'\n'+r.response)
 
 @bot.register(foreteller)
