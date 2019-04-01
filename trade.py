@@ -24,7 +24,7 @@ mp = bot.mps().search('度一咨询')[0]
 foreteller = [f1, f2, mp]
 
 reg1 = r'度一每日多空平'
-reg2 = r'明日股市预测:   <font size="+2" color="black">'
+reg2 = r'明日股市预测:   <font size="+2" color='
 
 def exampleAuth():
     accountID, token = None, None
