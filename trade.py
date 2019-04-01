@@ -137,13 +137,17 @@ def command(msg):
         print('reg1',m)
         f1.send_msg(m)
         if m != -1:
-            '''
+            
             date = str1[m+7:m+17]
+            print(date)
+            f1.send_msg(date)
+            '''
             y = datetime.strptime(date, '%Y-%m-%d')
             z = datetime.now()
             diff = z - y
             if diff.days == 1:
-            '''    
+            '''
+            print('get article')
             res = str(requests.get(url))
             n = res.find(reg2)
             print('reg2',n)
