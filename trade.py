@@ -125,11 +125,13 @@ def tradeClose(tradeID):
 
 @bot.register(foreteller)
 def command(msg):
-    if msg.type == SHARING:
-        if msg.url is not None:
-            str1 = msg.text
-            m = str1.find(reg1)
-            if m != -1:
+    print(msg)
+    if msg.url is not None:
+        print(msg.url)
+        str1 = msg.text
+        print(msg.text)
+        m = str1.find(reg1)
+        if m != -1:
                 '''
                 date = str1[m+7:m+17]
                 y = datetime.strptime(date, '%Y-%m-%d')
@@ -137,13 +139,13 @@ def command(msg):
                 diff = z - y
                 if diff.days == 1:
                 '''    
-                res = str(requests.get(url))
-                n = res.find(reg1)
-                if n!=-1:
-                    signal = res[n+40:n+42]
-                    print(signal)
-                    trade(signal)
-    else:
+            res = str(requests.get(url))
+            n = res.find(reg1)
+            if n!=-1:
+                signal = res[n+40:n+42]
+                print(signal)
+                trade(signal)
+    elif msg.sender is in [f1,f2]:
         signal = msg.text
         print(signal)
         trade(signal)
