@@ -49,32 +49,47 @@ def trade(signal):
         tradelist = tradeList()
         if tradelist == []:
             print('下单做多')
+            f1.send_msg('下单做多')
             marketOrder(units1)
         else:
             for trade in tradelist:
                 if int(trade['units']) < 0:
                     print('平空单')
+                    f1.send_msg('平空单')
                     tradeClose(trade['id'])
                     print('下单做多')
+                    f1.send_msg('下单做多')
                     marketOrder(units1)
+                else:
+                    print('已存在多单')
+                    f1.send_msg('已存在多单')
     elif signal == '平仓':
         tradelist = tradeList()
         if tradelist != []:
             for trade in tradelist:
                 print('平仓')
+                f1.send_msg('平仓')
                 tradeClose(trade['id'])
+        print('没有持仓')
+        f1.send_msg('没有持仓')
     elif signal == '做空':
         tradelist = tradeList()
         if tradelist == []:
             print('下单做空')
+            f1.send_msg('下单做空')
             marketOrder(-units1)
         else:
             for trade in tradelist:
                 if int(trade['units']) > 0:
                     print('平多单')
+                    f1.send_msg('平多单')
                     tradeClose(trade['id'])
                     print('下单做空')
+                    f1.send_msg('下单做空')
                     marketOrder(-units1)
+                else:
+                    print('已存在空单')
+                    f1.send_msg('已存在空单')
     else:
         print('指令无效')
         f1.send_msg('指令无效')
