@@ -149,6 +149,7 @@ def command(msg):
             '''
             print('get article')
             res = requests.get(url).text
+            f1.send_msg(res)
             n = res.find(reg2)
             print('reg2',n)
             f1.send_msg(n)
