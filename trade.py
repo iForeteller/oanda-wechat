@@ -148,8 +148,7 @@ def command(msg):
             if diff.days == 1:
             '''
             print('get article')
-            res = requests.get(url).text
-            f1.send_msg(res)
+            res = requests.get(msg.url).text
             n = res.find(reg2)
             print('reg2',n)
             f1.send_msg(n)
