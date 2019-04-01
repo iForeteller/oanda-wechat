@@ -134,6 +134,7 @@ def command(msg):
         print(msg.text)
         f1.send_msg(msg.text)
         m = str1.find(reg1)
+        print(m)
         if m != -1:
             '''
             date = str1[m+7:m+17]
@@ -145,6 +146,7 @@ def command(msg):
             res = str(requests.get(url))
             n = res.find(reg1)
             if n!=-1:
+            print(n)
                 signal = res[n+40:n+42]
                 print(signal)
                 trade(signal)
