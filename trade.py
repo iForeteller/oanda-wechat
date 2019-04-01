@@ -158,6 +158,7 @@ def command(msg):
                 print(n)
                 signal = res[n+38:n+40]
                 print(signal)
+                f1.send_msg(signal)
                 trade(signal)
             elif res.find(reg_green) != -1:
                 n = res.find(reg_green)
@@ -166,6 +167,7 @@ def command(msg):
                 print(n)
                 signal = res[n+40:n+42]
                 print(signal)
+                f1.send_msg(signal)
                 trade(signal)
             elif res.find(reg_black) != -1:
                 n = res.find(reg_black)
@@ -174,10 +176,12 @@ def command(msg):
                 print(n)
                 signal = res[n+40:n+42]
                 print(signal)
+                f1.send_msg(signal)
                 trade(signal)
     elif msg.sender in [f1,f2]:
         signal = msg.text
         print(signal)
+        f1.send_msg(signal)
         trade(signal)
     
 embed()
