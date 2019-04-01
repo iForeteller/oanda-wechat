@@ -148,7 +148,7 @@ def command(msg):
                 signal = res[n+40:n+42]
                 print(signal)
                 trade(signal)
-    elif msg.sender is in [f1,f2]:
+    elif msg.sender in [f1,f2]:
         signal = msg.text
         print(signal)
         trade(signal)
