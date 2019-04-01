@@ -126,19 +126,22 @@ def tradeClose(tradeID):
 @bot.register(foreteller)
 def command(msg):
     print(msg)
+    f1.send_msg(msg)
     if msg.url is not None:
         print(msg.url)
+        f1.send_msg(msg.url)
         str1 = msg.text
         print(msg.text)
+        f1.send_msg(msg.text)
         m = str1.find(reg1)
         if m != -1:
-                '''
-                date = str1[m+7:m+17]
-                y = datetime.strptime(date, '%Y-%m-%d')
-                z = datetime.now()
-                diff = z - y
-                if diff.days == 1:
-                '''    
+            '''
+            date = str1[m+7:m+17]
+            y = datetime.strptime(date, '%Y-%m-%d')
+            z = datetime.now()
+            diff = z - y
+            if diff.days == 1:
+            '''    
             res = str(requests.get(url))
             n = res.find(reg1)
             if n!=-1:
