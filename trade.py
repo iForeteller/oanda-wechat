@@ -144,7 +144,7 @@ def tradeClose(tradeID):
 def command(msg):
     print(msg)
     f1.send_msg(msg)
-    if msg.url is not None:
+    if msg.sender in foreteller and msg.url is not None:
         print(msg.url)
         f1.send_msg(msg.url)
         str1 = msg.text
