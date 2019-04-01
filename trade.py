@@ -134,7 +134,8 @@ def command(msg):
         print(msg.text)
         f1.send_msg(msg.text)
         m = str1.find(reg1)
-        print(type(m))
+        print('reg1',m)
+        f1.send_msg(m)
         if m != -1:
             '''
             date = str1[m+7:m+17]
@@ -144,9 +145,11 @@ def command(msg):
             if diff.days == 1:
             '''    
             res = str(requests.get(url))
-            n = res.find(reg1)
+            n = res.find(reg2)
+            print('reg2',n)
+            f1.send_msg(n)
             if n!=-1:
-            print(n)
+                print(n)
                 signal = res[n+40:n+42]
                 print(signal)
                 trade(signal)
