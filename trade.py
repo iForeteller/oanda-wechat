@@ -24,7 +24,9 @@ mp = bot.mps().search('度一咨询')[0]
 foreteller = [f1, f2, mp]
 
 reg1 = r'度一每日多空平'
-reg2 = r'明日股市预测:   <font size="+2" color='
+reg_red = r'明日股市预测:   <font size="+2" color="red">'
+reg_green = r'明日股市预测:   <font size="+2" color="green">'
+reg_black = r'明日股市预测:   <font size="+2" color="black">'
 
 def exampleAuth():
     accountID, token = None, None
@@ -149,10 +151,26 @@ def command(msg):
             '''
             print('get article')
             res = requests.get(msg.url).text
-            n = res.find(reg2)
-            print('reg2',n)
-            f1.send_msg(n)
-            if n!=-1:
+            if res.find(reg_red) != -1:
+                n = res.find(reg_red)
+                print('reg_red',n)
+                f1.send_msg(n)
+                print(n)
+                signal = res[n+38:n+40]
+                print(signal)
+                trade(signal)
+            elif res.find(reg_green) != -1:
+                n = res.find(reg_green)
+                print('reg_green',n)
+                f1.send_msg(n)
+                print(n)
+                signal = res[n+40:n+42]
+                print(signal)
+                trade(signal)
+            elif res.find(reg_black) != -1:
+                n = res.find(reg_black)
+                print('reg_black',n)
+                f1.send_msg(n)
                 print(n)
                 signal = res[n+40:n+42]
                 print(signal)
