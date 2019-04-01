@@ -125,7 +125,7 @@ def tradeClose(tradeID):
 
 @bot.register(foreteller)
 def command(msg):
-    if msg.sender == mp and msg.type == SHARING:
+    if msg.type == SHARING:
         if msg.url is not None:
             str1 = msg.text
             m = str1.find(reg1)
