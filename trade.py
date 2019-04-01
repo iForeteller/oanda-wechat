@@ -134,7 +134,7 @@ def command(msg):
         print(msg.text)
         f1.send_msg(msg.text)
         m = str1.find(reg1)
-        print(m)
+        print(type(m))
         if m != -1:
             '''
             date = str1[m+7:m+17]
