@@ -18,7 +18,7 @@ from datetime import datetime
 
 bot = Bot(cache_path=True, console_qr=True)
 
-f1 = bot.friends().search('先知')[0]
+f1 = bot.self    #friends().search('先知')[0]
 f2 = bot.friends().search('Commander')[0]
 mp = bot.mps().search('度一咨询')[0]
 foreteller = [f1, f2, mp]
