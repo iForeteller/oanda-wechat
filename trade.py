@@ -23,7 +23,7 @@ f2 = bot.friends().search('Commander')[0]
 mp = bot.mps().search('度一咨询')[0]
 foreteller = [f1, f2, mp]
 
-reg1 = r'度一每日多空平'
+reg1 = r'度一多空平(火星系统)'
 reg_red = r'明日股市预测:   <font size="+2" color="red">'
 reg_green = r'明日股市预测:   <font size="+2" color="green">'
 reg_black = r'明日股市预测:   <font size="+2" color="black">'
@@ -154,45 +154,42 @@ def command(msg):
         print('reg1',m)
         f1.send_msg(m)
         if m != -1:
-            
-            date = str1[m+7:m+17]
+            date = str1[m+11:m+21]
             print(date)
             f1.send_msg(date)
-            '''
             y = datetime.strptime(date, '%Y-%m-%d')
             z = datetime.now()
-            diff = z - y
-            if diff.days == 1:
-            '''
-            print('get article')
-            res = requests.get(msg.url).text
-            if res.find(reg_red) != -1:
-                n = res.find(reg_red)
-                print('reg_red',n)
-                f1.send_msg(n)
-                print(n)
-                signal = res[n+38:n+40]
-                print(signal)
-                f1.send_msg(signal)
-                trade(signal)
-            elif res.find(reg_green) != -1:
-                n = res.find(reg_green)
-                print('reg_green',n)
-                f1.send_msg(n)
-                print(n)
-                signal = res[n+40:n+42]
-                print(signal)
-                f1.send_msg(signal)
-                trade(signal)
-            elif res.find(reg_black) != -1:
-                n = res.find(reg_black)
-                print('reg_black',n)
-                f1.send_msg(n)
-                print(n)
-                signal = res[n+40:n+42]
-                print(signal)
-                f1.send_msg(signal)
-                trade(signal)
+            diff = y - z
+            if diff.days >= 0:
+                print('get article')
+                res = requests.get(msg.url).text
+                if res.find(reg_red) != -1:
+                    n = res.find(reg_red)
+                    print('reg_red',n)
+                    f1.send_msg(n)
+                    print(n)
+                    signal = res[n+38:n+40]
+                    print(signal)
+                    f1.send_msg(signal)
+                    trade(signal)
+                elif res.find(reg_green) != -1:
+                    n = res.find(reg_green)
+                    print('reg_green',n)
+                    f1.send_msg(n)
+                    print(n)
+                    signal = res[n+40:n+42]
+                    print(signal)
+                    f1.send_msg(signal)
+                    trade(signal)
+                elif res.find(reg_black) != -1:
+                    n = res.find(reg_black)
+                    print('reg_black',n)
+                    f1.send_msg(n)
+                    print(n)
+                    signal = res[n+40:n+42]
+                    print(signal)
+                    f1.send_msg(signal)
+                    trade(signal)
     elif msg.sender in [f1,f2]:
         signal = msg.text
         print(signal)
